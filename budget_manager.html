@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Travel Budget Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4a89dc;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4a89dc;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4a89dc;
+        }
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        .budget-total {
+            font-size: 24px;
+            font-weight: 700;
+            color:#4a89dc;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .breakdown {
+            margin-top: 20px;
+        }
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .section-title {
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #4a89dc;
+            color: #333;
+        }
+        .places-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .place-tag {
+            background-color: #4a89dc;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+        .info-text {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        #loading {
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #4a89dc;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Indian Travel Budget Calculator</h1>
+        
+        <form id="budgetForm">
+            <div class="two-column">
+                <div class="form-group">
+                    <label for="sourceState">Source State/UT:</label>
+                    <select id="sourceState" name="sourceState" required>
+                        <option value="">Select Source State/UT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="destinationState">Destination State/UT:</label>
+                    <select id="destinationState" name="destinationState" required>
+                        <option value="">Select Destination State/UT</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="form-group">
+                    <label for="travel">Mode of Travel:</label>
+                    <select id="travel" name="travel" required>
+                        <option value="">Select Travel Mode</option>
+                        <option value="flight">Flight</option>
+                        <option value="train">Train</option>
+                        <option value="bus">Bus</option>
+                        <option value="cab">Cab</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nights">Number of Nights:</label>
+                    <input type="number" id="nights" name="nights" min="1" max="30" value="3" required>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="form-group">
+                    <label for="hotel">Accommodation Type:</label>
+                    <select id="hotel" name="hotel" required>
+                        <option value="">Select Accommodation</option>
+                        <option value="budget">Budget Hotel</option>
+                        <option value="mid-range">Mid-range Hotel</option>
+                        <option value="luxury">Luxury Hotel</option>
+                        <option value="homestay">Homestay/Guesthouse</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="food">Food Preference:</label>
+                    <select id="food" name="food" required>
+                        <option value="">Select Food Preference</option>
+                        <option value="budget">Street Food/Budget Meals</option>
+                        <option value="mid-range">Mid-range Restaurants</option>
+                        <option value="luxury">Fine Dining</option>
+                        <option value="mix">Mix of Options</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit">Calculate Budget</button>
+        </form>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>Calculating your travel budget...</p>
+        </div>
+
+        <div id="result">
+            <h2>Your Travel Budget Summary</h2>
+            <p id="tripSummary"></p>
+            
+            <div class="budget-total">
+                Estimated Budget: ₹<span id="totalBudget"></span>
+            </div>
+
+            <h3 class="section-title">Budget Breakdown</h3>
+            <div class="breakdown" id="budgetBreakdown">
+                <!-- Budget breakdown items will be inserted here -->
+            </div>
+
+            <h3 class="section-title">Places to Visit</h3>
+            <ul class="places-list" id="recommendedPlaces">
+                <!-- Recommended places will be inserted here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // List of all Indian States and Union Territories
+        const statesAndUTs = [
+            // States
+            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", 
+            "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", 
+            "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", 
+            "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", 
+            "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", 
+            "Uttar Pradesh", "Uttarakhand", "West Bengal",
+            // Union Territories
+            "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", 
+            "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+        ];
+
+        // Populate source and destination dropdowns
+        document.addEventListener('DOMContentLoaded', function() {
+            const sourceDropdown = document.getElementById('sourceState');
+            const destDropdown = document.getElementById('destinationState');
+            
+            statesAndUTs.forEach(state => {
+                sourceDropdown.innerHTML += `<option value="${state}">${state}</option>`;
+                destDropdown.innerHTML += `<option value="${state}">${state}</option>`;
+            });
+        });
+
+        // Form submission handler
+        document.getElementById('budgetForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            
+            // Gather form data
+            const formData = {
+                sourceState: document.getElementById('sourceState').value,
+                destinationState: document.getElementById('destinationState').value,
+                travel: document.getElementById('travel').value,
+                food: document.getElementById('food').value,
+                hotel: document.getElementById('hotel').value,
+                nights: document.getElementById('nights').value
+            };
+            
+            try {
+                // API call to your Flask backend
+                const response = await fetch('http://localhost:5000/budget-summary', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Display the results
+                    displayResults(data);
+                } else {
+                    alert(`Error: ${data.error || 'Something went wrong'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to calculate budget. Please check if the server is running.');
+            } finally {
+                // Hide loading spinner
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
+
+        // Function to display results
+        function displayResults(data) {
+            // Set trip summary
+            document.getElementById('tripSummary').textContent = 
+                `${data.source_state} to ${data.destination_state} · ${data.days} nights · ${formatTravelMode(data.travel_option)}`;
+            
+            // Set total budget
+            document.getElementById('totalBudget').textContent = data.estimated_budget.toLocaleString('en-IN');
+            
+            // Display budget breakdown
+            const breakdownContainer = document.getElementById('budgetBreakdown');
+            breakdownContainer.innerHTML = '';
+            
+            for (const [category, amount] of Object.entries(data.breakdown)) {
+                breakdownContainer.innerHTML += `
+                    <div class="breakdown-item">
+                        <span>${category}</span>
+                        <span>₹${amount.toLocaleString('en-IN')}</span>
+                    </div>
+                `;
+            }
+            
+            // Display recommended places
+            const placesContainer = document.getElementById('recommendedPlaces');
+            placesContainer.innerHTML = '';
+            
+            if (data.recommended_places && data.recommended_places.length > 0) {
+                data.recommended_places.forEach(place => {
+                    placesContainer.innerHTML += `<li class="place-tag">${place}</li>`;
+                });
+            } else {
+                placesContainer.innerHTML = '<li>No specific places recommended for this destination.</li>';
+            }
+            
+            // Show the result container
+            document.getElementById('result').style.display = 'block';
+        }
+
+        // Helper function to format travel mode
+        function formatTravelMode(mode) {
+            const modes = {
+                'flight': 'Flight',
+                'train': 'Train',
+                'bus': 'Bus',
+                'cab': 'Cab'
+            };
+            return modes[mode] || mode;
+        }
+    </script>
+</body>
+</html>

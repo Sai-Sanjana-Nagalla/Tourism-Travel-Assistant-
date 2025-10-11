@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourism Planning Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Login page initially shown -->
+        <div id="login-page" class="page">
+            <div class="login-container">
+                <div class="logo">
+                    <i class="fas fa-globe-americas"></i>
+                    <h1>TravelPlanner</h1>
+                </div>
+                <div class="login-form">
+                    <h2>Sign In</h2>
+                    <form id="login-form">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="email" id="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="remember-forgot">
+                            <label><input type="checkbox"> Remember me</label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn-primary">Sign In</button>
+                        <div class="social-login">
+                            <p>Or sign in with</p>
+                            <div class="social-icons">
+                                <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                                <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="signup-link">
+                            <p>Don't have an account? <a href="#" id="signup-link">Sign up</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home page / Dashboard -->
+        <div id="home-page" class="page active">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-globe-americas"></i>
+                    <h1>TravelPlanner</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active" id="nav-home">Home</a></li>
+                        <li><a href="#" id="nav-trips">My Trips</a></li>
+                        <li><a href="#" id="nav-contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="user-menu">
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Profile">
+                        <span>John Doe</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard">
+                <div class="welcome-banner">
+                    <h2>Welcome back, John!</h2>
+                    <p>Where would you like to travel today?</p>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-large" id="choose-place" onclick="window.location.href='destination.html'">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Choose a Place</span>
+                    </button>
+                    <button class="btn-large" id="suggest-place" onclick="window.location.href='budget_manager.html'">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Budget Manager</span>
+                    </button>                      
+                </div>
+
+                <div class="map-container">
+                    <h3>Plan Your Route</h3>
+                    <div class="route-inputs">
+                        <div class="input-group">
+                            <i class="fas fa-dot-circle"></i>
+                            <input type="text" id="origin" placeholder="Enter starting point">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-map-pin"></i>
+                            <input type="text" id="destination" placeholder="Enter destination">
+                        </div>
+                        <button id="find-route" class="btn-primary">Find Route</button>
+                    </div>
+                    <div id="map"></div>
+                    <div id="directions-panel"></div>
+                </div>
+
+                <!-- Replacing the Featured Destinations section with a Destination Search section -->
+
+<!-- Clean and simple destination search section -->
+        
+
+<!-- Template for tourism place card that will be cloned by JavaScript -->
+<template id="place-card-template">
+    <div class="place-card">
+        <div class="place-image">
+            <img src="" alt="">
+        </div>
+        <div class="place-info">
+            <h4 class="place-name"></h4>
+            <p class="place-category"><i class="fas fa-tag"></i> <span></span></p>
+            <p class="place-rating"><i class="fas fa-star"></i> <span></span></p>
+            <p class="place-description"></p>
+            <button class="btn-view-details">View Details</button>
+        </div>
+    </div>
+</template>
+                </div>
+            </main>
+        </div>
+
+        <!-- Contact us page -->
+        <div id="contact-page" class="page">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-globe-americas"></i>
+                    <h1>TravelPlanner</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" id="contact-nav-home">Home</a></li>
+                        <li><a href="#" id="contact-nav-trips">My Trips</a></li>
+                        <li><a href="#" class="active" id="contact-nav-contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="user-menu">
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Profile">
+                        <span>John Doe</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="contact-container">
+                <div class="contact-header">
+                    <h2>Get in Touch</h2>
+                    <p>We'd love to hear from you. Please fill out the form below or contact us directly.</p>
+                </div>
+
+                <div class="contact-content">
+                    <div class="contact-form">
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email</label>
+                                <input type="email" id="contact-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Our Location</h4>
+                                <p>123 Travel Street, Tourism City, TC 10001</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Phone Number</h4>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>support@travelplanner.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Support Hours</h4>
+                                <p>Monday - Friday: 9am - 6pm</p>
+                                <p>Weekend: 10am - 4pm</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-map">
+                            <h4>Find Us</h4>
+                            <div id="contact-location-map"></div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <h4>Connect With Us</h4>
+                            <div class="social-icons">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFzcKeD8p0lYwJzOGsm3Y-vS2UZM9Z2Tk&libraries=places&callback=initMap">
+</script>
+<script>
+    // Add this to your existing script.js file
+
+// Modified version to connect to backend APIs
+document.addEventListener('DOMContentLoaded', function() {
+    const searchButton = document.getElementById('search-destinations');
+    const destinationInput = document.getElementById('destination-search');
+    const searchInitialState = document.getElementById('search-initial-state');
+    const searchLoadingState = document.getElementById('search-loading-state');
+    const searchResultsState = document.getElementById('search-results-state');
+    const searchNoResults = document.getElementById('search-no-results');
+    const searchLocation = document.getElementById('search-location');
+    const tourismPlacesList = document.getElementById('tourism-places-list');
+    const loadMoreButton = document.getElementById('load-more');
+    
+    // Store the next page token for pagination
+    let nextPageToken = null;
+    
+    // Backend API URLs - update these with your actual server address if needed
+    const API_BASE_URL = 'http://localhost:3001'; // Change this to your server URL if different
+    
+    // Function to search for a destination using the backend API
+    function searchDestination() {
+        const query = destinationInput.value.trim();
+        
+        if (!query) {
+            return;
+        }
+        
+        // Show loading state
+        searchInitialState.classList.add('hidden');
+        searchResultsState.classList.add('hidden');
+        searchNoResults.classList.add('hidden');
+        searchLoadingState.classList.remove('hidden');
+        
+        // Reset next page token
+        nextPageToken = null;
+        
+        // Make API call to our backend server
+        fetch(`${API_BASE_URL}/api/places/search?query=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Store next page token if available
+                nextPageToken = data.next_page_token || null;
+                
+                if (data.results && data.results.length > 0) {
+                    displayResults(query, data.results);
+                } else {
+                    // No results found
+                    searchLoadingState.classList.add('hidden');
+                    searchNoResults.classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching places:', error);
+                // Show error message
+                searchLoadingState.classList.add('hidden');
+                searchNoResults.classList.remove('hidden');
+                // You could enhance this to show a specific error message
+            });
+    }
+    
+    // Function to get a photo URL either from the API or a placeholder
+    function getPhotoUrl(place) {
+        if (place.photos && place.photos.length > 0) {
+            const photoReference = place.photos[0].photo_reference;
+            return `${API_BASE_URL}/api/places/photo?photoreference=${photoReference}&maxwidth=300`;
+        } else {
+            // Fallback to placeholder
+            return `https://via.placeholder.com/300x180?text=${encodeURIComponent(place.name)}`;
+        }
+    }
+    
+    // Function to get place category from types array
+    function getPlaceCategory(types) {
+        const categoryMapping = {
+            'tourist_attraction': 'Tourist Attraction',
+            'museum': 'Museum',
+            'church': 'Religious Site',
+            'park': 'Park',
+            'amusement_park': 'Amusement Park',
+            'art_gallery': 'Art Gallery',
+            'aquarium': 'Aquarium',
+            'zoo': 'Zoo',
+            'landmark': 'Landmark',
+            'historical_landmark': 'Historical Landmark',
+            'monument': 'Monument',
+            'point_of_interest': 'Point of Interest'
+        };
+        
+        // Find the first type that we have a mapping for
+        for (const type of types) {
+            if (categoryMapping[type]) {
+                return categoryMapping[type];
+            }
+        }
+        
+        // Default category
+        return 'Tourist Attraction';
+    }
+    
+    // Function to display results
+    function displayResults(location, places) {
+        // Hide loading state
+        searchLoadingState.classList.add('hidden');
+        
+        // Update location name - capitalize each word
+        searchLocation.textContent = location.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+        
+        // Clear previous results
+        tourismPlacesList.innerHTML = '';
+        
+        // Get template
+        const template = document.getElementById('place-card-template');
+        
+        // Add places to the list
+        places.forEach(place => {
+            const placeElement = document.importNode(template.content, true);
+            
+            // Update place information
+            placeElement.querySelector('.place-name').textContent = place.name;
+            placeElement.querySelector('.place-image img').src = getPhotoUrl(place);
+            placeElement.querySelector('.place-image img').alt = place.name;
+            placeElement.querySelector('.place-category span').textContent = getPlaceCategory(place.types);
+            placeElement.querySelector('.place-rating span').textContent = place.rating ? place.rating.toFixed(1) : 'N/A';
+            
+            // Create a short description from vicinity or formatted address
+            const description = place.vicinity || place.formatted_address || '';
+            placeElement.querySelector('.place-description').textContent = description;
+            
+            // Add to the list
+            tourismPlacesList.appendChild(placeElement);
+        });
+        
+        // Show results state
+        searchResultsState.classList.remove('hidden');
+        
+        // Configure the load more button
+        if (nextPageToken) {
+            loadMoreButton.disabled = false;
+            loadMoreButton.textContent = "Load More Places";
+            loadMoreButton.style.display = 'block';
+        } else {
+            loadMoreButton.style.display = 'none';
+        }
+    }
+    
+    // Load more places functionality
+    loadMoreButton.addEventListener('click', function() {
+        if (!nextPageToken) {
+            return;
+        }
+        
+        // Disable button and show loading
+        this.disabled = true;
+        this.textContent = "Loading...";
+        
+        // Wait a bit before making the request - Google API requires a delay
+        // when using next_page_token
+        setTimeout(() => {
+            fetch(`${API_BASE_URL}/api/places/next?pagetoken=${nextPageToken}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Update next page token
+                    nextPageToken = data.next_page_token || null;
+                    
+                    if (data.results && data.results.length > 0) {
+                        // Append new results
+                        const location = searchLocation.textContent;
+                        const template = document.getElementById('place-card-template');
+                        
+                        data.results.forEach(place => {
+                            const placeElement = document.importNode(template.content, true);
+                            
+                            // Update place information
+                            placeElement.querySelector('.place-name').textContent = place.name;
+                            placeElement.querySelector('.place-image img').src = getPhotoUrl(place);
+                            placeElement.querySelector('.place-image img').alt = place.name;
+                            placeElement.querySelector('.place-category span').textContent = getPlaceCategory(place.types);
+                            placeElement.querySelector('.place-rating span').textContent = place.rating ? place.rating.toFixed(1) : 'N/A';
+                            
+                            // Create a short description from vicinity or formatted address
+                            const description = place.vicinity || place.formatted_address || '';
+                            placeElement.querySelector('.place-description').textContent = description;
+                            
+                            // Add to the list
+                            tourismPlacesList.appendChild(placeElement);
+                        });
+                        
+                        // Update load more button
+                        if (nextPageToken) {
+                            loadMoreButton.disabled = false;
+                            loadMoreButton.textContent = "Load More Places";
+                        } else {
+                            loadMoreButton.style.display = 'none';
+                        }
+                    } else {
+                        // No more results
+                        loadMoreButton.textContent = "No more places to load";
+                        loadMoreButton.disabled = true;
+                        
+                        // Hide button after a delay
+                        setTimeout(() => {
+                            loadMoreButton.style.display = 'none';
+                        }, 3000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching more places:', error);
+                    loadMoreButton.textContent = "Error loading more places";
+                    loadMoreButton.disabled = true;
+                });
+        }, 1000); // Wait 1 second before making the request
+    });
+    
+    // Add map initialization
+    window.initMap = function() {
+        // Map initialization for the main map
+        const mapElement = document.getElementById('map');
+        if (mapElement) {
+            const map = new google.maps.Map(mapElement, {
+                center: { lat: 40.7128, lng: -74.0060 }, // Default to NY
+                zoom: 12
+            });
+            
+            // Initialize the DirectionsService and DirectionsRenderer
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+            directionsRenderer.setPanel(document.getElementById('directions-panel'));
+            
+            // Set up autocomplete for origin and destination inputs
+            const originInput = document.getElementById('origin');
+            const destinationInput = document.getElementById('destination');
+            
+            if (originInput && destinationInput) {
+                const originAutocomplete = new google.maps.places.Autocomplete(originInput);
+                const destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
+                
+                // Set up route finding
+                const findRouteButton = document.getElementById('find-route');
+                if (findRouteButton) {
+                    findRouteButton.addEventListener('click', function() {
+                        calculateAndDisplayRoute(directionsService, directionsRenderer);
+                    });
+                }
+            }
+        }
+        
+        // Map initialization for contact page map
+        const contactMapElement = document.getElementById('contact-location-map');
+        if (contactMapElement) {
+            const contactMap = new google.maps.Map(contactMapElement, {
+                center: { lat: 40.7128, lng: -74.0060 }, // Default location
+                zoom: 14
+            });
+            
+            // Add a marker for the office location
+            new google.maps.Marker({
+                position: { lat: 40.7128, lng: -74.0060 },
+                map: contactMap,
+                title: 'Our Office'
+            });
+        }
+    };
+    
+    // Function to calculate and display a route
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        const origin = document.getElementById('origin').value;
+        const destination = document.getElementById('destination').value;
+        
+        if (!origin || !destination) {
+            alert('Please enter both origin and destination');
+            return;
+        }
+        
+        // Use our backend API instead of direct Google Maps API call
+        fetch(`${API_BASE_URL}/api/directions`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                origin: origin,
+                destination: destination,
+                travelMode: 'driving' // Default to driving
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'OK') {
+                directionsRenderer.setDirections(data);
+            } else {
+                alert('Directions request failed due to ' + data.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error calculating directions:', error);
+            alert('Error calculating directions. Please try again.');
+        });
+    }
+    
+    // Event listeners
+    searchButton.addEventListener('click', searchDestination);
+    
+    destinationInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchDestination();
+        }
+    });
+    
+    // Login form handling
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // For now, just simulate login
+            document.getElementById('login-page').classList.remove('active');
+            document.getElementById('home-page').classList.add('active');
+            
+            // In a real app, you would make an API call to your authentication endpoint
+            // fetch(`${API_BASE_URL}/api/login`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({
+            //         email: document.getElementById('email').value,
+            //         password: document.getElementById('password').value
+            //     })
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     if (data.success) {
+            //         document.getElementById('login-page').classList.remove('active');
+            //         document.getElementById('home-page').classList.add('active');
+            //     } else {
+            //         alert('Login failed: ' + data.message);
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error('Login error:', error);
+            //     alert('Login failed. Please try again.');
+            // });
+        });
+    }
+    
+    // Navigation handlers
+    document.getElementById('nav-home').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('home-page').classList.add('active');
+        document.getElementById('contact-page').classList.remove('active');
+    });
+    
+    document.getElementById('nav-contact').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('home-page').classList.remove('active');
+        document.getElementById('contact-page').classList.add('active');
+    });
+    
+    document.getElementById('contact-nav-home').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('home-page').classList.add('active');
+        document.getElementById('contact-page').classList.remove('active');
+    });
+    
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('home-page').classList.remove('active');
+            document.getElementById('contact-page').classList.remove('active');
+            document.getElementById('login-page').classList.add('active');
+        });
+    }
+    
+    // Check API status on load
+    fetch(`${API_BASE_URL}/api/status`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('API Status:', data.status);
+        })
+        .catch(error => {
+            console.error('API Status check failed:', error);
+            console.warn('Running in offline mode with mock data');
+            
+            // Fall back to mock data if API is not available
+            // This ensures the app works even if the backend is not running
+            searchButton.addEventListener('click', mockDataSearch);
+            destinationInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    mockDataSearch();
+                }
+            });
+        });
+        
+    // Mock data function as fallback (same as your original implementation)
+    function mockDataSearch() {
+        const query = destinationInput.value.trim().toLowerCase();
+        
+        if (!query) {
+            return;
+        }
+        
+        // Show loading state
+        searchInitialState.classList.add('hidden');
+        searchResultsState.classList.add('hidden');
+        searchNoResults.classList.add('hidden');
+        searchLoadingState.classList.remove('hidden');
+        
+        setTimeout(() => {
+            // Try to find exact matches first
+            const tourismPlacesData = {
+                'paris': [
+                    {
+                        name: 'Eiffel Tower',
+                        image: 'https://via.placeholder.com/300x180?text=Eiffel+Tower',
+                        category: 'Landmark',
+                        rating: 4.7,
+                        description: 'Iconic iron tower that defines the Paris skyline.'
+                    },
+                    // ... other Paris places
+                ],
+                'tokyo': [
+                    {
+                        name: 'Tokyo Skytree',
+                        image: 'https://via.placeholder.com/300x180?text=Tokyo+Skytree',
+                        category: 'Tower',
+                        rating: 4.5,
+                        description: 'Tallest tower in Japan and landmark of Tokyo.'
+                    },
+                    // ... other Tokyo places
+                ],
+                'new york': [
+                    {
+                        name: 'Statue of Liberty',
+                        image: 'https://via.placeholder.com/300x180?text=Statue+of+Liberty',
+                        category: 'Monument',
+                        rating: 4.7,
+                        description: 'Famous copper statue gifted by France to the United States.'
+                    },
+                    // ... other New York places
+                ]
+            };
+            
+            if (tourismPlacesData[query]) {
+                displayMockResults(query, tourismPlacesData[query]);
+                return;
+            }
+            
+            // If not found, check if query is contained in any of our mock data keys
+            for (const place in tourismPlacesData) {
+                if (place.includes(query) || query.includes(place)) {
+                    displayMockResults(place, tourismPlacesData[place]);
+                    return;
+                }
+            }
+            
+            // No results found
+            searchLoadingState.classList.add('hidden');
+            searchNoResults.classList.remove('hidden');
+        }, 800); // Simulate network delay for realism
+    }
+    
+    // Function to display mock results
+    function displayMockResults(location, places) {
+        // Hide loading state
+        searchLoadingState.classList.add('hidden');
+        
+        // Update location name - capitalize each word
+        searchLocation.textContent = location.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+        
+        // Clear previous results
+        tourismPlacesList.innerHTML = '';
+        
+        // Get template
+        const template = document.getElementById('place-card-template');
+        
+        // Add places to the list
+        places.forEach(place => {
+            const placeElement = document.importNode(template.content, true);
+            
+            // Update place information
+            placeElement.querySelector('.place-name').textContent = place.name;
+            placeElement.querySelector('.place-image img').src = place.image;
+            placeElement.querySelector('.place-image img').alt = place.name;
+            placeElement.querySelector('.place-category span').textContent = place.category;
+            placeElement.querySelector('.place-rating span').textContent = place.rating.toFixed(1);
+            placeElement.querySelector('.place-description').textContent = place.description;
+            
+            // Add to the list
+            tourismPlacesList.appendChild(placeElement);
+        });
+        
+        // Show results state
+        searchResultsState.classList.remove('hidden');
+        
+        // Configure the load more button
+        loadMoreButton.disabled = false;
+        loadMoreButton.textContent = "Load More Places";
+        loadMoreButton.style.display = 'block';
+        loadMoreButton.addEventListener('click', function() {
+            this.disabled = true;
+            this.textContent = "No more places to load";
+        });
+    }
+});
+</script>
+</body>
+</html>

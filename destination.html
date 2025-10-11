@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose a Place - TravelPlanner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+  <div id="app">
+    <div id="destination-page" class="page active">
+      <header>
+        <div class="logo">
+          <i class="fas fa-globe-americas"></i>
+          <h1>TravelPlanner</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#" id="dest-nav-home">Home</a></li>
+            <li><a href="#" id="dest-nav-trips">My Trips</a></li>
+            <li><a href="#" id="dest-nav-contact">Contact Us</a></li>
+          </ul>
+        </nav>
+        <div class="user-menu">
+          <div class="user-profile">
+            <img src="https://via.placeholder.com/40" alt="User Profile" />
+            <span>John Doe</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="destination-container">
+        <div class="tabs">
+          <div class="tab active">Plan Your Trip</div>
+        </div>
+
+        <div class="trip-planning-form">
+          <h2>✨ Create Your Personalized Travel Plan</h2>
+
+          <div class="form-group">
+            <label for="start-month">🗓️ Preferred Travel Month</label>
+            <select id="start-month" class="form-control">
+              <option>January</option><option>February</option><option>March</option>
+              <option>April</option><option>May</option><option>June</option>
+              <option>July</option><option>August</option><option>September</option>
+              <option>October</option><option>November</option><option>December</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="budget">💰 Budget (INR)</label>
+            <input type="number" id="budget" class="form-control" placeholder="Enter your total budget" />
+          </div>
+
+          <div class="form-group">
+            <label for="region">🧭 Preferred Region</label>
+            <select id="region" class="form-control">
+              <option value="North">North India</option>
+              <option value="South">South India</option>
+              <option value="East">East India</option>
+              <option value="West">West India</option>
+              <option value="Central">Central India</option>
+              <option value="North East">North East India</option>
+              <option value="Any">No Preference</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="interests">🎯 Interests</label>
+            <select id="interests" class="form-control" multiple>
+                <option value="Adventure & Sports">🏞️ Adventure & Sports</option>
+                <option value="Relaxation & Wellness">🧘 Relaxation & Wellness</option>
+                <option value="Temples & Divine">🛕 Temples & Divine</option>
+                <option value="Ancient Sites">🏛️ Ancient Stories & Historical Sites</option>
+                <option value="Culture">🎭 Cultural Explorations: Folk art, festivals & traditions</option>
+                <option value="Trekking">🥾 Trekking</option>
+                <option value="Beaches">🏖️ Beaches</option>
+              </select>              
+            <small>Hold Ctrl/Cmd to select multiple options</small>
+          </div>
+
+          <div class="form-group">
+            <label for="crowd-preference">👥 Crowd Preference</label>
+            <select id="crowd-preference" class="form-control">
+              <option value="Less">Prefer less crowded times</option>
+              <option value="Moderate">Moderate crowds acceptable</option>
+              <option value="High">Any crowd level</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="travel-style">🚶 Travel Style</label>
+            <select id="travel-style" class="form-control">
+              <option value="Relaxed">Relaxed (fewer activities per day)</option>
+              <option value="Moderate">Moderate pace</option>
+              <option value="Intense">Intense (packed schedule)</option>
+            </select>
+          </div>
+
+          <button type="button" id="generate-plan" class="btn-primary">🚀 Generate My Travel Plan</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('dest-nav-home').addEventListener('click', function () {
+  window.location.href = 'index.html';
+});
+
+document.getElementById('generate-plan').addEventListener('click', async function () {
+  // Show loading state
+  const generateBtn = document.getElementById('generate-plan');
+  const originalBtnText = generateBtn.innerHTML;
+  generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+  generateBtn.disabled = true;
+  
+  // Get form values
+  const preferredMonth = document.getElementById('start-month').value;
+  const budget = parseInt(document.getElementById('budget').value);
+  const region = document.getElementById('region').value;
+  const interests = Array.from(document.getElementById('interests').selectedOptions).map(opt => opt.value);
+  const crowdPreference = document.getElementById('crowd-preference').value;
+  const travelStyle = document.getElementById('travel-style').value;
+  
+  // Save user preferences to localStorage (for filtering reference)
+  const userPreferences = {
+    preferred_month: preferredMonth,
+    budget: budget,
+    region: region,
+    interests: interests,
+    crowd_preference: crowdPreference,
+    travel_style: travelStyle
+  };
+  
+  localStorage.setItem("userPreferences", JSON.stringify(userPreferences));
+  
+  // Clear previous recommendations to avoid showing stale data
+  localStorage.removeItem("recommendations");
+  
+  const requestBody = {
+    preferred_month: preferredMonth,
+    budget: budget,
+    region: region,
+    interests: interests,
+    crowd_preference: crowdPreference,
+    travel_style: travelStyle
+  };
+  
+  try {
+    const response = await fetch("http://127.0.0.1:5000/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody)
+    });
+    
+    // Check if response is ok
+    if (!response.ok) {
+      throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data || (data.recommendations && data.recommendations.length === 0)) {
+      alert("No matching recommendations found. Try adjusting your preferences.");
+      // Reset button
+      generateBtn.innerHTML = originalBtnText;
+      generateBtn.disabled = false;
+    } else {
+      // Ensure we're storing proper data format
+      localStorage.setItem("recommendations", JSON.stringify(data));
+      
+      // Navigate to recommendation page
+      window.location.href = "recommendation.html";
+    }
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    alert("There was an error generating your travel plan. Please try again.");
+    
+    // Reset button
+    generateBtn.innerHTML = originalBtnText;
+    generateBtn.disabled = false;
+  }
+});
+
+// Pre-fill form with previous values if they exist
+document.addEventListener('DOMContentLoaded', function() {
+  const savedPreferences = JSON.parse(localStorage.getItem("userPreferences") || "{}");
+  
+  if (Object.keys(savedPreferences).length > 0) {
+    // Restore form values
+    if (savedPreferences.preferred_month) {
+      document.getElementById('start-month').value = savedPreferences.preferred_month;
+    }
+    
+    if (savedPreferences.budget) {
+      document.getElementById('budget').value = savedPreferences.budget;
+    }
+    
+    if (savedPreferences.region) {
+      document.getElementById('region').value = savedPreferences.region;
+    }
+    
+    if (savedPreferences.crowd_preference) {
+      document.getElementById('crowd-preference').value = savedPreferences.crowd_preference;
+    }
+    
+    if (savedPreferences.travel_style) {
+      document.getElementById('travel-style').value = savedPreferences.travel_style;
+    }
+    
+    // Handle multi-select interests
+    if (savedPreferences.interests && savedPreferences.interests.length > 0) {
+      const interestsSelect = document.getElementById('interests');
+      
+      // Deselect all options first
+      for (let i = 0; i < interestsSelect.options.length; i++) {
+        interestsSelect.options[i].selected = false;
+      }
+      
+      // Select saved interests
+      savedPreferences.interests.forEach(interest => {
+        for (let i = 0; i < interestsSelect.options.length; i++) {
+          if (interestsSelect.options[i].value === interest) {
+            interestsSelect.options[i].selected = true;
+          }
+        }
+      });
+    }
+  }
+});
+  </script>
+</body>
+</html>

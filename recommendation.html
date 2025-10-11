@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Recommendations - TravelPlanner</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    :root {
+      --primary-color: #2196F3;
+      --primary-dark: #1976D2;
+      --secondary-color: #FF9800;
+      --success-color: #4CAF50;
+      --warning-color: #FFC107;
+      --danger-color: #F44336;
+      --gray-light: #f5f5f5;
+      --gray-medium: #e0e0e0;
+      --gray-dark: #757575;
+      --white: #ffffff;
+      --radius-sm: 5px;
+      --radius-md: 10px;
+      --radius-lg: 15px;
+      --shadow-sm: 0 2px 5px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: var(--white);
+      padding: 15px 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary-color);
+    }
+
+    .logo i {
+      font-size: 24px;
+    }
+
+    .logo h1 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 5px 0;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-color);
+    }
+
+    /* Main Content */
+    main.recommendation-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      flex-grow: 1;
+    }
+
+    .recommendation-header-main {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .recommendation-header-main h2 {
+      font-size: 32px;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+
+    .recommendation-header-main p {
+      color: var(--gray-dark);
+      font-size: 18px;
+    }
+
+    /* Recommendation Cards */
+    .recommendation-card {
+      border-radius: var(--radius-md);
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-md);
+      background-color: var(--white);
+      transition: var(--transition);
+      border-top: 5px solid var(--primary-color);
+    }
+
+    .recommendation-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .recommendation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--gray-medium);
+      padding-bottom: 15px;
+    }
+
+    .recommendation-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .match-percentage {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .match-high {
+      background-color: var(--success-color);
+      color: white;
+    }
+
+    .match-medium {
+      background-color: var(--warning-color);
+      color: #333;
+    }
+
+    .match-low {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .place-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 15px 0;
+    }
+
+    .place-tag {
+      background-color: #e3f2fd;
+      color: var(--primary-dark);
+      padding: 5px 12px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .place-tag:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .match-breakdown {
+      margin-top: 15px;
+      padding: 15px;
+      background-color: var(--gray-light);
+      border-radius: var(--radius-md);
+    }
+
+    .match-breakdown h4 {
+      margin-bottom: 12px;
+      color: #444;
+      font-size: 16px;
+    }
+
+    .match-criteria {
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .match-criteria:last-child {
+      border-bottom: none;
+    }
+
+    .destination-list {
+      margin-top: 20px;
+    }
+
+    .destination-list h4 {
+      margin-bottom: 12px;
+      color: #444;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .destination-list h4 i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+
+    .destinations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .destination-item {
+      background-color: #f1f8e9;
+      padding: 8px 15px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      border-left: 3px solid var(--success-color);
+      transition: var(--transition);
+    }
+
+    .destination-item:hover {
+      background-color: #dcedc8;
+      transform: translateY(-2px);
+    }
+
+    .best-time {
+      margin-top: 20px;
+    }
+
+    .best-time h4 {
+      margin-bottom: 8px;
+      color: #444;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .best-time h4 i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+
+    .best-time p {
+      background-color: #fff8e1;
+      padding: 10px 15px;
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--warning-color);
+    }
+
+    /* Constraints Section */
+    .constraints-section {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ffebee;
+      border-radius: var(--radius-md);
+    }
+
+    .constraints-section h4 {
+      margin-bottom: 10px;
+      color: #d32f2f;
+      font-size: 16px;
+    }
+
+    .constraints-list {
+      padding-left: 0;
+      list-style-type: none;
+    }
+
+    .constraint-item {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .constraint-item i {
+      margin-right: 10px;
+      color: #d32f2f;
+    }
+
+    /* Feedback Banner */
+    .feedback-banner {
+      background-color: #fff8e1;
+      border-left: 4px solid var(--secondary-color);
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feedback-message {
+      font-weight: 500;
+      margin-bottom: 12px;
+      font-size: 18px;
+      color: #333;
+      display: flex;
+      align-items: center;
+    }
+
+    .feedback-message i {
+      margin-right: 10px;
+      color: var(--secondary-color);
+    }
+
+    .feedback-detail {
+      margin: 12px 0;
+      padding: 8px 0;
+    }
+
+    .interest-tag {
+      display: inline-block;
+      background-color: #ffccbc;
+      color: #d84315;
+      padding: 5px 10px;
+      border-radius: var(--radius-lg);
+      margin: 0 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .feedback-suggestions {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed var(--secondary-color);
+    }
+
+    .suggestion-header {
+      font-weight: 500;
+      margin-bottom: 10px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .suggestion-header i {
+      margin-right: 8px;
+      color: var(--secondary-color);
+    }
+
+    .suggestion-list {
+      list-style-type: none;
+      padding-left: 10px;
+    }
+
+    .suggestion-list li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .suggestion-list li i {
+      color: var(--success-color);
+      margin-right: 10px;
+    }
+
+    /* Buttons */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background-color: var(--white);
+      color: var(--gray-dark);
+      border: 1px solid var(--gray-medium);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--gray-light);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Filter Pills */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-pill {
+      background-color: #e3f2fd;
+      color: var(--primary-dark);
+      padding: 8px 15px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .filter-pill i {
+      color: var(--primary-color);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px;
+      }
+      
+      nav ul {
+        margin: 15px 0;
+        gap: 15px;
+      }
+      
+      .recommendation-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      
+      .btn-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="recommendation-page" class="page active">
+      <header>
+        <div class="logo">
+          <i class="fas fa-globe-americas"></i>
+          <h1>TravelPlanner</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#" id="rec-nav-home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#" id="rec-nav-trips"><i class="fas fa-suitcase"></i> My Trips</a></li>
+            <li><a href="#" id="rec-nav-explore"><i class="fas fa-compass"></i> Explore</a></li>
+            <li><a href="#" id="rec-nav-contact"><i class="fas fa-envelope"></i> Contact Us</a></li>
+          </ul>
+        </nav>
+        <div class="user-menu">
+          <div class="user-profile">
+            <img src="/api/placeholder/40/40" alt="User Profile" />
+            <span>John Doe</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="recommendation-container">
+        <div class="recommendation-header-main">
+          <h2>✨ Your Personalized Travel Recommendations</h2>
+          <p>Based on your preferences, here are the best destinations for your next adventure</p>
+        </div>
+
+        <div id="active-filters" class="active-filters">
+          <!-- Will be populated with JavaScript -->
+        </div>
+
+        <div id="feedback-area"></div>
+        <div id="recommendations-list"></div>
+
+        <div class="btn-container">
+          <button id="adjust-preferences" class="btn btn-secondary">
+            <i class="fas fa-sliders-h"></i> Adjust Preferences
+          </button>
+          <button id="save-recommendations" class="btn btn-primary">
+            <i class="fas fa-bookmark"></i> Save Recommendations
+          </button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('rec-nav-home').addEventListener('click', function () {
+  window.location.href = 'index.html';
+});
+
+document.getElementById('adjust-preferences').addEventListener('click', function () {
+  window.location.href = 'destination.html';
+});
+
+document.getElementById('save-recommendations').addEventListener('click', function () {
+  alert('Recommendations saved! This feature would connect to your user account in a full implementation.');
+});
+
+// Check for fresh data first
+document.addEventListener('DOMContentLoaded', function() {
+  loadRecommendations();
+});
+
+function loadRecommendations() {
+  // Get recommendations data from localStorage
+  const recommendationsData = localStorage.getItem("recommendations");
+  
+  if (!recommendationsData) {
+    // No data found - redirect back to destination form
+    alert("No recommendation data found. Please enter your preferences.");
+    window.location.href = 'destination.html';
+    return;
+  }
+  
+  const responseData = JSON.parse(recommendationsData);
+  const feedbackContainer = document.getElementById('feedback-area');
+  const recommendationsContainer = document.getElementById('recommendations-list');
+  const activeFiltersContainer = document.getElementById('active-filters');
+  
+  // Extract recommendations array
+  const recommendations = responseData.recommendations || [];
+  const feedback = responseData.feedback || {};
+  
+  // Show active filters
+  if (localStorage.getItem("userPreferences")) {
+    const preferences = JSON.parse(localStorage.getItem("userPreferences"));
+    let filtersHTML = `<div class="filter-pill"><i class="fas fa-filter"></i> Active Filters:</div>`;
+    
+    if (preferences.region && preferences.region !== "Any") {
+      filtersHTML += `<div class="filter-pill"><i class="fas fa-map-marker-alt"></i> ${preferences.region}</div>`;
+    }
+    
+    if (preferences.preferred_month) {
+      filtersHTML += `<div class="filter-pill"><i class="fas fa-calendar-alt"></i> ${preferences.preferred_month}</div>`;
+    }
+    
+    if (preferences.interests && preferences.interests.length > 0) {
+      preferences.interests.forEach(interest => {
+        if (interest !== "Any") {
+          filtersHTML += `<div class="filter-pill"><i class="fas fa-heart"></i> ${interest}</div>`;
+        } else {
+          filtersHTML += `<div class="filter-pill"><i class="fas fa-heart"></i> All Interests</div>`;
+        }
+      });
+    }
+    
+    // Add budget if available
+    if (preferences.budget) {
+      filtersHTML += `<div class="filter-pill"><i class="fas fa-dollar-sign"></i> Budget: $${preferences.budget}</div>`;
+    }
+    
+    // Add travel style if available
+    if (preferences.travel_style && preferences.travel_style !== "Any") {
+      filtersHTML += `<div class="filter-pill"><i class="fas fa-suitcase"></i> ${preferences.travel_style}</div>`;
+    }
+    
+    // Add crowd preference if available
+    if (preferences.crowd_preference && preferences.crowd_preference !== "Any") {
+      filtersHTML += `<div class="filter-pill"><i class="fas fa-users"></i> ${preferences.crowd_preference}</div>`;
+    }
+    
+    activeFiltersContainer.innerHTML = filtersHTML;
+  } else {
+    activeFiltersContainer.style.display = 'none';
+  }
+
+  // Display enhanced feedback if any
+  if (feedback && Object.keys(feedback).length > 0) {
+    let feedbackHTML = `<div class="feedback-banner">`;
+    
+    // No region match feedback
+    if (feedback.no_region_match) {
+      feedbackHTML += `
+        <div class="feedback-message">
+          <i class="fas fa-map-marker-alt"></i> ${feedback.message || "No destinations matched your exact criteria."}
+        </div>`;
+    } 
+    // Month-specific feedback
+    else if (feedback.month_issue) {
+      feedbackHTML += `
+        <div class="feedback-message">
+          <i class="fas fa-calendar-alt"></i> ${feedback.message}
+        </div>`;
+    } 
+    // Interest-specific feedback
+    else if (feedback.interest_issue) {
+      feedbackHTML += `
+        <div class="feedback-message">
+          <i class="fas fa-heart"></i> ${feedback.message}
+        </div>`;
+      
+      if (feedback.problematic_interests) {
+        const interests = feedback.problematic_interests;
+        feedbackHTML += `
+          <div class="feedback-detail">
+            <span>Consider changing:</span>
+            ${interests.map(interest => `<span class="interest-tag">${interest}</span>`).join('')}
+          </div>`;
+      }
+    }
+    // General feedback
+    else if (feedback.message) {
+      feedbackHTML += `
+        <div class="feedback-message">
+          <i class="fas fa-lightbulb"></i> ${feedback.message}
+        </div>`;
+    }
+    
+    // Show actionable suggestions
+    if (feedback.suggestions && feedback.suggestions.length > 0) {
+      feedbackHTML += `
+        <div class="feedback-suggestions">
+          <div class="suggestion-header"><i class="fas fa-lightbulb"></i> Try these adjustments:</div>
+          <ul class="suggestion-list">
+            ${feedback.suggestions.map(suggestion => 
+              `<li><i class="fas fa-check-circle"></i> ${suggestion}</li>`).join('')}
+          </ul>
+        </div>`;
+    } else if (feedback.suggestion) {
+      // Support for legacy "suggestion" property
+      feedbackHTML += `
+        <div class="feedback-suggestion">
+          <i class="fas fa-lightbulb"></i> Suggestion: ${feedback.suggestion}
+        </div>`;
+    }
+    
+    feedbackHTML += `</div>`;
+    feedbackContainer.innerHTML = feedbackHTML;
+  } else {
+    feedbackContainer.innerHTML = '';
+  }
+
+  // Display recommendations
+  if (recommendations && recommendations.length > 0) {
+    let recommendationsHTML = '';
+    
+    recommendations.forEach(rec => {
+      // Determine match class
+      let matchClass = "match-low";
+      if (rec.match_percentage >= 75) {
+        matchClass = "match-high";
+      } else if (rec.match_percentage >= 50) {
+        matchClass = "match-medium";
+      }
+      
+      // Build score breakdown
+      let breakdownHTML = '';
+      if (rec.score_breakdown) {
+        const breakdown = rec.score_breakdown;
+        for (const [key, value] of Object.entries(breakdown)) {
+          if (key !== 'matched_interests' && key !== 'unmatched_interests' && value !== "Not specified") {
+            breakdownHTML += `
+              <div class="match-criteria">
+                <span>${key.replace('_', ' ').charAt(0).toUpperCase() + key.replace('_', ' ').slice(1)}:</span>
+                <span>${typeof value === 'number' ? value.toFixed(1) : value}</span>
+              </div>`;
+          }
+        }
+      }
+      
+      // Format destination lists
+      const formatDestinations = (destinations, icon) => {
+        if (!destinations || destinations.length === 0) return '<span>None listed</span>';
+        return destinations.map(dest => `<span class="destination-item">${dest}</span>`).join('');
+      };
+      
+      // Build constraints list
+      let constraintsHTML = '';
+      if (rec.constraints && rec.constraints.length > 0) {
+        constraintsHTML = `
+          <div class="constraints-section">
+            <h4><i class="fas fa-exclamation-triangle"></i> Considerations:</h4>
+            <ul class="constraints-list">
+              ${rec.constraints.map(constraint => 
+                `<li class="constraint-item"><i class="fas fa-exclamation-circle"></i> ${constraint.message}</li>`
+              ).join('')}
+            </ul>
+          </div>`;
+      }
+      
+      recommendationsHTML += `
+        <div class="recommendation-card">
+          <div class="recommendation-header">
+            <div class="recommendation-title">${rec.state}</div>
+            <div class="match-percentage ${matchClass}">${rec.match_percentage}% Match</div>
+          </div>
+          
+          <div class="place-tags">
+            ${rec.types ? rec.types.map(type => `<span class="place-tag">${type}</span>`).join('') : ''}
+          </div>
+          
+          <div class="match-breakdown">
+            <h4><i class="fas fa-chart-pie"></i> Match Details:</h4>
+            ${breakdownHTML}
+          </div>
+          
+          ${constraintsHTML}
+          
+          <div class="destination-list">
+            <h4><i class="fas fa-landmark"></i> Famous Places:</h4>
+            <div class="destinations">
+              ${formatDestinations(rec.famous_places, "fas fa-landmark")}
+            </div>
+          </div>
+          
+          <div class="destination-list">
+            <h4><i class="fas fa-gem"></i> Hidden Gems:</h4>
+            <div class="destinations">
+              ${formatDestinations(rec.hidden_gems, "fas fa-gem")}
+            </div>
+          </div>
+          
+          <div class="best-time">
+            <h4><i class="fas fa-calendar-alt"></i> Best Time to Visit:</h4>
+            <p>${rec.best_time || "Year-round"}</p>
+          </div>
+        </div>`;
+    });
+    
+    recommendationsContainer.innerHTML = recommendationsHTML;
+  } else {
+    recommendationsContainer.innerHTML = '<div class="no-results">No recommendations found. Please <a href="destination.html">adjust your preferences</a>.</div>';
+  }
+}
+  </script>
+</body>
+</html>

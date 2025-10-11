@@ -1,0 +1,656 @@
+[
+  {
+    "state": "Andhra Pradesh",
+    "famous_places": [
+      "Tirupati",
+      "Araku Valley",
+      "Vijayawada Kanaka Durga Temple",
+      "Lepakshi",
+      "Amaravati"
+    ],
+    "hidden_gems": [
+      "Gandikota",
+      "Horsley Hills",
+      "Yaganti Temple",
+      "Kondaveedu Fort"
+    ],
+    "types": [
+      "Religious",
+      "Nature",
+      "Historical"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Arunachal Pradesh",
+    "famous_places": [
+      "Tawang",
+      "Ziro Valley",
+      "Bomdila",
+      "Itanagar"
+    ],
+    "hidden_gems": [
+      "Mechuka",
+      "Dong Village",
+      "Sangti Valley"
+    ],
+    "types": [
+      "Nature",
+      "Culture",
+      "Adventure"
+    ],
+    "best_time": "March to October"
+  },
+  {
+    "state": "Assam",
+    "famous_places": [
+      "Kaziranga National Park",
+      "Guwahati",
+      "Majuli",
+      "Sivasagar"
+    ],
+    "hidden_gems": [
+      "Haflong",
+      "Dibru-Saikhowa National Park"
+    ],
+    "types": [
+      "Wildlife",
+      "Religious",
+      "Nature"
+    ],
+    "best_time": "November to April"
+  },
+  {
+    "state": "Bihar",
+    "famous_places": [
+      "Bodh Gaya",
+      "Nalanda",
+      "Rajgir",
+      "Patna Sahib"
+    ],
+    "hidden_gems": [
+      "Valmiki National Park",
+      "Maner Sharif"
+    ],
+    "types": [
+      "Religious",
+      "Historical",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Chhattisgarh",
+    "famous_places": [
+      "Chitrakote Falls",
+      "Barnawapara Wildlife Sanctuary",
+      "Jagdalpur"
+    ],
+    "hidden_gems": [
+      "Tirathgarh Falls",
+      "Kanger Valley National Park"
+    ],
+    "types": [
+      "Nature",
+      "Adventure",
+      "Tribal Culture"
+    ],
+    "best_time": "October to February"
+  },
+  {
+    "state": "Goa",
+    "famous_places": [
+      "Calangute Beach",
+      "Baga Beach",
+      "Basilica of Bom Jesus",
+      "Dudhsagar Falls"
+    ],
+    "hidden_gems": [
+      "Butterfly Beach",
+      "Tambdi Surla Temple",
+      "Chorla Ghats"
+    ],
+    "types": [
+      "Beach",
+      "Nightlife",
+      "Heritage"
+    ],
+    "best_time": "November to February"
+  },
+  {
+    "state": "Gujarat",
+    "famous_places": [
+      "Gir National Park",
+      "Dwarka",
+      "Somnath",
+      "Rann of Kutch"
+    ],
+    "hidden_gems": [
+      "Champaner-Pavagadh",
+      "Mandvi Beach",
+      "Modhera Sun Temple"
+    ],
+    "types": [
+      "Wildlife",
+      "Religious",
+      "Heritage"
+    ],
+    "best_time": "November to February"
+  },
+  {
+    "state": "Haryana",
+    "famous_places": [
+      "Kurukshetra",
+      "Panipat",
+      "Sultanpur Bird Sanctuary"
+    ],
+    "hidden_gems": [
+      "Morni Hills",
+      "Pinjore Gardens"
+    ],
+    "types": [
+      "Religious",
+      "Nature",
+      "History"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Himachal Pradesh",
+    "famous_places": [
+      "Manali",
+      "Shimla",
+      "Dharamshala",
+      "Spiti Valley"
+    ],
+    "hidden_gems": [
+      "Tirthan Valley",
+      "Barot Valley",
+      "Jibhi"
+    ],
+    "types": [
+      "Adventure",
+      "Nature",
+      "Culture"
+    ],
+    "best_time": "March to June, September to December"
+  },
+  {
+    "state": "Jharkhand",
+    "famous_places": [
+      "Ranchi",
+      "Netarhat",
+      "Deoghar",
+      "Betla National Park"
+    ],
+    "hidden_gems": [
+      "Hundru Falls",
+      "McCluskieganj"
+    ],
+    "types": [
+      "Nature",
+      "Religious",
+      "Wildlife"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Karnataka",
+    "famous_places": [
+      "Mysore",
+      "Hampi",
+      "Coorg",
+      "Bangalore",
+      "Gokarna"
+    ],
+    "hidden_gems": [
+      "Agumbe",
+      "Gudibande Fort",
+      "Kudremukh"
+    ],
+    "types": [
+      "Heritage",
+      "Nature",
+      "Adventure"
+    ],
+    "best_time": "October to April"
+  },
+  {
+    "state": "Kerala",
+    "famous_places": [
+      "Munnar",
+      "Alleppey",
+      "Kochi",
+      "Wayanad"
+    ],
+    "hidden_gems": [
+      "Varkala",
+      "Thenmala",
+      "Ponmudi"
+    ],
+    "types": [
+      "Nature",
+      "Relaxation",
+      "Culture"
+    ],
+    "best_time": "September to March"
+  },
+  {
+    "state": "Madhya Pradesh",
+    "famous_places": [
+      "Khajuraho",
+      "Bandhavgarh",
+      "Bhopal",
+      "Ujjain"
+    ],
+    "hidden_gems": [
+      "Orchha",
+      "Pachmarhi",
+      "Chanderi"
+    ],
+    "types": [
+      "Heritage",
+      "Wildlife",
+      "Spiritual"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Maharashtra",
+    "famous_places": [
+      "Mumbai",
+      "Ajanta & Ellora",
+      "Lonavala",
+      "Shirdi"
+    ],
+    "hidden_gems": [
+      "Harihareshwar",
+      "Tarkarli",
+      "Lonar Crater"
+    ],
+    "types": [
+      "Beach",
+      "Spiritual",
+      "Historical"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Manipur",
+    "famous_places": [
+      "Loktak Lake",
+      "Imphal",
+      "Kangla Fort"
+    ],
+    "hidden_gems": [
+      "Ukhrul",
+      "Dzuko Valley"
+    ],
+    "types": [
+      "Nature",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Meghalaya",
+    "famous_places": [
+      "Shillong",
+      "Cherrapunjee",
+      "Mawsynram"
+    ],
+    "hidden_gems": [
+      "Mawlynnong",
+      "Laitlum Canyons"
+    ],
+    "types": [
+      "Nature",
+      "Adventure"
+    ],
+    "best_time": "September to May"
+  },
+  {
+    "state": "Mizoram",
+    "famous_places": [
+      "Aizawl",
+      "Reiek",
+      "Vantawng Falls"
+    ],
+    "hidden_gems": [
+      "Phawngpui",
+      "Hmuifang"
+    ],
+    "types": [
+      "Nature",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Nagaland",
+    "famous_places": [
+      "Kohima",
+      "Dz\u00fckou Valley",
+      "Hornbill Festival"
+    ],
+    "hidden_gems": [
+      "Khonoma Village",
+      "Longwa"
+    ],
+    "types": [
+      "Culture",
+      "Nature"
+    ],
+    "best_time": "October to May"
+  },
+  {
+    "state": "Odisha",
+    "famous_places": [
+      "Puri",
+      "Konark Sun Temple",
+      "Bhubaneswar",
+      "Chilika Lake"
+    ],
+    "hidden_gems": [
+      "Satkosia Gorge",
+      "Daringbadi"
+    ],
+    "types": [
+      "Religious",
+      "Nature",
+      "Heritage"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Punjab",
+    "famous_places": [
+      "Amritsar",
+      "Golden Temple",
+      "Jallianwala Bagh"
+    ],
+    "hidden_gems": [
+      "Anandpur Sahib",
+      "Kapurthala"
+    ],
+    "types": [
+      "Religious",
+      "History",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Rajasthan",
+    "famous_places": [
+      "Jaipur",
+      "Udaipur",
+      "Jaisalmer",
+      "Jodhpur"
+    ],
+    "hidden_gems": [
+      "Bundi",
+      "Alwar",
+      "Mandawa"
+    ],
+    "types": [
+      "Heritage",
+      "Desert",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Sikkim",
+    "famous_places": [
+      "Gangtok",
+      "Tsomgo Lake",
+      "Nathula Pass"
+    ],
+    "hidden_gems": [
+      "Yuksom",
+      "Zuluk"
+    ],
+    "types": [
+      "Nature",
+      "Adventure"
+    ],
+    "best_time": "March to June, September to December"
+  },
+  {
+    "state": "Tamil Nadu",
+    "famous_places": [
+      "Chennai",
+      "Madurai",
+      "Ooty",
+      "Rameswaram"
+    ],
+    "hidden_gems": [
+      "Valparai",
+      "Yercaud"
+    ],
+    "types": [
+      "Religious",
+      "Nature",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Telangana",
+    "famous_places": [
+      "Hyderabad",
+      "Warangal",
+      "Nagarjuna Sagar"
+    ],
+    "hidden_gems": [
+      "Medak Fort",
+      "Bogatha Waterfall"
+    ],
+    "types": [
+      "Historical",
+      "Nature"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Tripura",
+    "famous_places": [
+      "Agartala",
+      "Ujjayanta Palace",
+      "Neermahal"
+    ],
+    "hidden_gems": [
+      "Jampui Hills",
+      "Unakoti"
+    ],
+    "types": [
+      "Culture",
+      "Nature"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Uttar Pradesh",
+    "famous_places": [
+      "Agra",
+      "Varanasi",
+      "Lucknow",
+      "Ayodhya",
+      "Vrindhavan"
+    ],
+    "hidden_gems": [
+      "Chitrakoot",
+      "Sarnath"
+    ],
+    "types": [
+      "Religious",
+      "Heritage",
+      "Spiritual"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Uttarakhand",
+    "famous_places": [
+      "Nainital",
+      "Mussoorie",
+      "Rishikesh",
+      "Haridwar"
+    ],
+    "hidden_gems": [
+      "Chopta",
+      "Binsar",
+      "Munsiyari"
+    ],
+    "types": [
+      "Nature",
+      "Spiritual",
+      "Adventure"
+    ],
+    "best_time": "March to June, September to November"
+  },
+  {
+    "state": "West Bengal",
+    "famous_places": [
+      "Kolkata",
+      "Darjeeling",
+      "Sundarbans",
+      "Kalimpong"
+    ],
+    "hidden_gems": [
+      "Bishnupur",
+      "Jaldapara"
+    ],
+    "types": [
+      "Culture",
+      "Nature",
+      "Heritage"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Delhi",
+    "famous_places": [
+      "Red Fort",
+      "India Gate",
+      "Qutub Minar",
+      "Lotus Temple"
+    ],
+    "hidden_gems": [
+      "Agrasen ki Baoli",
+      "Majnu ka Tilla"
+    ],
+    "types": [
+      "Historical",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Jammu and Kashmir",
+    "famous_places": [
+      "Srinagar",
+      "Gulmarg",
+      "Pahalgam",
+      "Sonamarg"
+    ],
+    "hidden_gems": [
+      "Doodhpathri",
+      "Bangus Valley"
+    ],
+    "types": [
+      "Nature",
+      "Adventure"
+    ],
+    "best_time": "April to October"
+  },
+  {
+    "state": "Ladakh",
+    "famous_places": [
+      "Leh",
+      "Nubra Valley",
+      "Pangong Lake",
+      "Tso Moriri"
+    ],
+    "hidden_gems": [
+      "Hanle",
+      "Zanskar Valley"
+    ],
+    "types": [
+      "Adventure",
+      "Nature"
+    ],
+    "best_time": "May to September"
+  },
+  {
+    "state": "Puducherry",
+    "famous_places": [
+      "Promenade Beach",
+      "Auroville",
+      "Paradise Beach"
+    ],
+    "hidden_gems": [
+      "Serenity Beach",
+      "Ousteri Lake"
+    ],
+    "types": [
+      "Beach",
+      "Spiritual"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Andaman and Nicobar Islands",
+    "famous_places": [
+      "Port Blair",
+      "Havelock Island",
+      "Neil Island"
+    ],
+    "hidden_gems": [
+      "Little Andaman",
+      "Cinque Island"
+    ],
+    "types": [
+      "Beach",
+      "Nature",
+      "Adventure"
+    ],
+    "best_time": "October to May"
+  },
+  {
+    "state": "Lakshadweep",
+    "famous_places": [
+      "Agatti Island",
+      "Bangaram Island",
+      "Kavaratti"
+    ],
+    "hidden_gems": [
+      "Kalpeni",
+      "Minicoy"
+    ],
+    "types": [
+      "Beach",
+      "Adventure"
+    ],
+    "best_time": "October to March"
+  },
+  {
+    "state": "Dadra and Nagar Haveli and Daman and Diu",
+    "famous_places": [
+      "Daman",
+      "Diu Fort",
+      "Vanganga Garden"
+    ],
+    "hidden_gems": [
+      "Satmaliya Deer Park",
+      "Tribal Museum"
+    ],
+    "types": [
+      "Beach",
+      "History",
+      "Culture"
+    ],
+    "best_time": "October to March"
+  }
+]
